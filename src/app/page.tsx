@@ -10,6 +10,10 @@ import {FolderPlusIcon,BookmarkSquareIcon, EnvelopeIcon,ArrowLeftOnRectangleIcon
 import NewProject from "@/components/NewProject";
 import ProjectDocuments from "@/components/ProjectDocuments";
 import CalendarPage from "@/components/Calendar/CalendarPage";
+import LoginForm from "@/components/LoginForm";
+import SignupPage from "@/components/SignUpPage";
+
+
 
 const navItems = [
   { label: "Home", icon: <HomeIcon className="h-6 w-6" /> },
@@ -110,6 +114,10 @@ const reminders = [
 ];
 
 export default function DashboardPage() {
+  const [showSignupPage, setShowSignupPage] = useState(false);
+  const [showLoginPage, setShowLoginPage] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const [activeNav, setActiveNav] = useState<string>("Home");
   const [activeTab, setActiveTab] = useState<"Today" | "Week" | "Month">(
     "Today"
@@ -357,9 +365,15 @@ export default function DashboardPage() {
               <CogIcon className="mr-2 h-6 w-6" />
               <span>Settings</span>
             </button>
-            <button className="flex w-full items-center px-3 py-2 text-black hover:text-white hover:bg-gray-700 rounded-md">
+            <button
+              onClick={() => {
+                setShowLoginPage(true);
+                setActiveNav("Login");
+              }}
+              className="flex w-full items-center px-3 py-2 text-black hover:text-white hover:bg-gray-700 rounded-md"
+            >
               <ArrowLeftOnRectangleIcon className="mr-2 h-6 w-6" />
-              <span>Log Out</span>
+              <span>Log In</span>
             </button>
           </div>
         </div>
@@ -597,6 +611,33 @@ export default function DashboardPage() {
 
           {/* Canvas */}
           {activeNav === "Canvas" && <Canvas />}
+          {/*Login*/}
+          {activeNav === "Login" && showLoginPage && (
+          <div className="p-6 bg-white min-h-screen">
+            <LoginForm
+              onSuccess={() => {
+                setIsLoggedIn(true);
+                setShowLoginPage(false);
+                setActiveNav("Home"); // redirect to Home after login
+              }}
+                setShowSignupPage={setShowSignupPage}
+                setShowLoginPage={setShowLoginPage}
+                setActiveNav={setActiveNav}
+            />
+          </div>
+        )}
+        {/*Sign Up */}
+        {activeNav === "Signup" && showSignupPage && (
+          <div className="p-6 bg-white min-h-screen">
+            <SignupPage
+              onSuccess={() => {
+                setShowSignupPage(false);
+                setShowLoginPage(true);
+                setActiveNav("Login");
+              }}
+            />
+          </div>
+        )}
         </main>
       </div>
     </div>
