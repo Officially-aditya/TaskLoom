@@ -365,16 +365,29 @@ export default function DashboardPage() {
               <CogIcon className="mr-2 h-6 w-6" />
               <span>Settings</span>
             </button>
-            <button
-              onClick={() => {
-                setShowLoginPage(true);
-                setActiveNav("Login");
-              }}
-              className="flex w-full items-center px-3 py-2 text-black hover:text-white hover:bg-gray-700 rounded-md"
-            >
-              <ArrowLeftOnRectangleIcon className="mr-2 h-6 w-6" />
-              <span>Log In</span>
-            </button>
+            {isLoggedIn ? (
+              <button
+                onClick={() => {
+                  setIsLoggedIn(false);
+                  setActiveNav("Home");
+                }}
+                className="flex w-full items-center px-3 py-2 text-black hover:text-white hover:bg-red-700 rounded-md"
+              >
+                <ArrowLeftOnRectangleIcon className="mr-2 h-6 w-6" />
+                <span>Log Out</span>
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  setShowLoginPage(true);
+                  setActiveNav("Login");
+                }}
+                className="flex w-full items-center px-3 py-2 text-black hover:text-white hover:bg-gray-700 rounded-md"
+              >
+                <ArrowLeftOnRectangleIcon className="mr-2 h-6 w-6" />
+                <span>Log In</span>
+              </button>
+            )}
           </div>
         </div>
       </aside>
